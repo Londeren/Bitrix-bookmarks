@@ -25,7 +25,7 @@ class CUserTypeBool extends CUserTypeInteger
   function GetIBlockPropertyDescription()
   {
     return array(
-      "PROPERTY_TYPE" => "N",
+      "PROPERTY_TYPE" => "B",
       "USER_TYPE" => "bool",
       "DESCRIPTION" => "Логическое",
       'GetPropertyFieldHtml' => array('CUserTypeBool', 'GetPropertyFieldHtml'),
