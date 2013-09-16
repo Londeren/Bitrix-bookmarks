@@ -1,7 +1,7 @@
 <?
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
-// Íàõîäèì ñïèñîê èíôîáëîêîâ
+// ÐÐ°Ñ…Ð¾Ð´Ð¸Ð¼ ÑÐ¿Ð¸ÑÐ¾Ðº Ð¸Ð½Ñ„Ð¾Ð±Ð»Ð¾ÐºÐ¾Ð²
 /*
 if(!CModule::IncludeModule("iblock")) return;
 
@@ -20,14 +20,14 @@ $arTemplateParameters = array(
 		/*
 		"IBLOCK_TYPE" => array(
 			"PARENT" => "DATA_SOURSE",
-			"NAME" => "Òèï èíôîáëîêà",
+			"NAME" => "Ð¢Ð¸Ð¿ Ð¸Ð½Ñ„Ð¾Ð±Ð»Ð¾ÐºÐ°",
 			"TYPE" => "LIST",
 			"VALUES" => $arIBlockType,
 			"REFRESH" => "Y",
 		),
 		"IBLOCK_ID" => array(
 			"PARENT" => "DATA_SOURSE",
-			"NAME" => "Êîä èíôîáëîêà",
+			"NAME" => "ÐšÐ¾Ð´ Ð¸Ð½Ñ„Ð¾Ð±Ð»Ð¾ÐºÐ°",
 			"TYPE" => "LIST",
 			"ADDITIONAL_VALUES" => "Y",
 			"VALUES" => $arIBlock,
@@ -35,13 +35,13 @@ $arTemplateParameters = array(
 		),
 		"RELOAD_QUANTITY" => array(
 			"PARENT" => "OVERALL",
-			"NAME" => "Ïåðåñ÷èòûâàòü ÷èñëî ýëåìåíòîâ",
+			"NAME" => "ÐŸÐµÑ€ÐµÑÑ‡Ð¸Ñ‚Ñ‹Ð²Ð°Ñ‚ÑŒ Ñ‡Ð¸ÑÐ»Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð²",
 			"TYPE" => "CHECKBOX",
 			"DEFAULT" => "N",
 		),
 		"CARS_URL" => array(
 			"PARENT" => "OVERALL",
-			"NAME" => "Ñòðàíèöà ñî ñïèñêîì àâòîìîáèëåé",
+			"NAME" => "Ð¡Ñ‚Ñ€Ð°Ð½Ð¸Ñ†Ð° ÑÐ¾ ÑÐ¿Ð¸ÑÐºÐ¾Ð¼ Ð°Ð²Ñ‚Ð¾Ð¼Ð¾Ð±Ð¸Ð»ÐµÐ¹",
 			"TYPE" => "STRING",
 			"DEFAULT" => "/cars/",
 		),

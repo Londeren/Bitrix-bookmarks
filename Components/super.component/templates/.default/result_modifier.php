@@ -1,4 +1,7 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+/** @var CBitrixComponentTemplate $this */
+/** @var array $arParams */
+/** @var array $arResult */
 
 // component text here
 
@@ -8,7 +11,7 @@ if (!CModule::IncludeModule("iblock"))
 
 if (intval($arParams["IBLOCK_ID"]) <= 0)
 {
-	ShowMessage("Íå óêàçàí èíôîáëîê.");
+	ShowMessage("ÐÐµ ÑƒÐºÐ°Ð·Ð°Ð½ Ð¸Ð½Ñ„Ð¾Ð±Ð»Ð¾Ðº.");
 	return;
 }
 
@@ -43,7 +46,7 @@ while ($arElement = $db_elements->GetNext())
 if (!$elements_found)
 {	
 	$this->__component->AbortResultCache();
-	ShowError("Ýëåìåíò íå íàéäåí.");
+	ShowError("Ð­Ð»ÐµÐ¼ÐµÐ½Ñ‚ Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½.");
 	@define("ERROR_404", "Y");
 	CHTTP::SetStatus("404 Not Found");
 }
@@ -55,5 +58,4 @@ if (!$elements_found)
 $arResult["__TEMPLATE_FOLDER"] = $this->__folder;
 
 // writing new $arResult to cache file
-$this->__component->arResult = $arResult; 
-?>
+$this->__component->arResult = $arResult;

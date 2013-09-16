@@ -3,8 +3,8 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 
 $arComponentDescription = array(
-	"NAME" => "Ñóïåğ êîìïîíåíò",
-	"DESCRIPTION" => "Ïóñòîé êîìïîíåíò äëÿ ñîçäàíèÿ ëşáîé ëîãèêè",
+	"NAME" => "Ğ¡ÑƒĞ¿ĞµÑ€ ĞºĞ¾Ğ¼Ğ¿Ğ¾Ğ½ĞµĞ½Ñ‚",
+	"DESCRIPTION" => "ĞŸÑƒÑÑ‚Ğ¾Ğ¹ ĞºĞ¾Ğ¼Ğ¿Ğ¾Ğ½ĞµĞ½Ñ‚ Ğ´Ğ»Ñ ÑĞ¾Ğ·Ğ´Ğ°Ğ½Ğ¸Ñ Ğ»ÑĞ±Ğ¾Ğ¹ Ğ»Ğ¾Ğ³Ğ¸ĞºĞ¸",
 	"ICON" => "/images/menu_ext.gif",
 	"CACHE_PATH" => "Y",
 	"PATH" => array(

@@ -1,132 +1,140 @@
 <?
-if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
+if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
-if (isset($arParams["COMPONENT_ENABLE"]) && $arParams["COMPONENT_ENABLE"] === false)
-	return;
+if(isset($arParams["COMPONENT_ENABLE"]) && $arParams["COMPONENT_ENABLE"] === false)
+  return;
 
-// Ðåæèì ðàçðàáîòêè ïîä àäìèíîì
-$bDesignMode = $GLOBALS["APPLICATION"]->GetShowIncludeAreas() && is_object($GLOBALS["USER"]) && $GLOBALS["USER"]->IsAdmin();
+/** @var CBitrixComponent $this */
+/** @var array $arParams */
+/** @var array $arResult */
+/** @global CUser $USER */
+global $USER;
+/** @global CMain $APPLICATION */
+global $APPLICATION;
+
+// Ð ÐµÐ¶Ð¸Ð¼ Ñ€Ð°Ð·Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ¸ Ð¿Ð¾Ð´ Ð°Ð´Ð¼Ð¸Ð½Ð¾Ð¼
+$bDesignMode = $APPLICATION->GetShowIncludeAreas() && is_object($USER) && $USER->IsAdmin();
 
 // RSS
-if (!$bDesignMode && $arParams["IS_RSS"] == "Y")
+if(!$bDesignMode && $arParams["IS_RSS"] == "Y")
 {
-	$APPLICATION->RestartBuffer();
-	header("Content-Type: text/xml; charset=".LANG_CHARSET);
-	header("Pragma: no-cache");
+  $APPLICATION->RestartBuffer();
+  header("Content-Type: text/xml; charset=" . LANG_CHARSET);
+  header("Pragma: no-cache");
 }
 
 $arNavParams = CDBResult::GetNavParams();
 
-// Äîïîëíèòåëüíî êåøèðóåì òåêóùóþ ñòðàíèöó
+// Ð”Ð¾Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ð¾ ÐºÐµÑˆÐ¸Ñ€ÑƒÐµÐ¼ Ñ‚ÐµÐºÑƒÑ‰ÑƒÑŽ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñƒ
 $ADDITIONAL_CACHE_ID[] = $arNavParams["PAGEN"];
 $ADDITIONAL_CACHE_ID[] = $arNavParams["SIZEN"];
 
-$CACHE_PATH = "/".SITE_ID."/".LANGUAGE_ID.$this->__relativePath;
+$CACHE_PATH = "/" . SITE_ID . "/" . LANGUAGE_ID . $this->getRelativePath();
 
-// Ïîäêëþ÷àåòñÿ ôàéë result-modifier.php
-if($this->StartResultCache($arParams["CACHE_TIME"], $ADDITIONAL_CACHE_ID, $CACHE_PATH)) 
+// ÐŸÐ¾Ð´ÐºÐ»ÑŽÑ‡Ð°ÐµÑ‚ÑÑ Ñ„Ð°Ð¹Ð» result-modifier.php
+if($this->StartResultCache($arParams["CACHE_TIME"], $ADDITIONAL_CACHE_ID, $CACHE_PATH))
 {
-	if($arParams["IS_RSS"] == "Y" && $bDesignMode)
-	{
-		ob_start();
-		$this->IncludeComponentTemplate();
-		$contents = ob_get_contents();
-		ob_end_clean();
-		echo "<pre>",htmlspecialchars($contents),"</pre>";
-	}
-	else
-		$this->IncludeComponentTemplate();
+  if($arParams["IS_RSS"] == "Y" && $bDesignMode)
+  {
+    ob_start();
+    $this->IncludeComponentTemplate();
+    $contents = ob_get_contents();
+    ob_end_clean();
+    echo "<pre>", htmlspecialchars($contents), "</pre>";
+  }
+  else
+    $this->IncludeComponentTemplate();
 }
 
 // RSS
-if (!$bDesignMode && $arParams["IS_RSS"] == "Y")
+if(!$bDesignMode && $arParams["IS_RSS"] == "Y")
 {
-	$r = $APPLICATION->EndBufferContentMan();
-	echo $r;
-	if(defined("HTML_PAGES_FILE") && !defined("ERROR_404")) CHTMLPagesCache::writeFile(HTML_PAGES_FILE, $r);
-	die();
+  $r = $APPLICATION->EndBufferContentMan();
+  echo $r;
+  if(defined("HTML_PAGES_FILE") && !defined("ERROR_404")) CHTMLPagesCache::writeFile(HTML_PAGES_FILE, $r);
+  die();
 }
 
-// Ïîäêëþ÷àåì ôàéë áåç êåøèðîâàíèÿ
-$modifier_path = $_SERVER["DOCUMENT_ROOT"].$arResult["__TEMPLATE_FOLDER"]."/result_modifier_nc.php";
-$modifier_short_path = $_SERVER["DOCUMENT_ROOT"].$arResult["__TEMPLATE_FOLDER"]."/nc.php";
+// ÐŸÐ¾Ð´ÐºÐ»ÑŽÑ‡Ð°ÐµÐ¼ Ñ„Ð°Ð¹Ð» Ð±ÐµÐ· ÐºÐµÑˆÐ¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ
+$modifier_path = $_SERVER["DOCUMENT_ROOT"] . $arResult["__TEMPLATE_FOLDER"] . "/result_modifier_nc.php";
+$modifier_short_path = $_SERVER["DOCUMENT_ROOT"] . $arResult["__TEMPLATE_FOLDER"] . "/nc.php";
 
-if (file_exists($modifier_short_path))
+if(file_exists($modifier_short_path))
 {
-	require_once($modifier_short_path);
-	$mod_name = "nc.php";
+  require_once($modifier_short_path);
+  $mod_name = "nc.php";
 }
-elseif (file_exists($modifier_path))
+elseif(file_exists($modifier_path))
 {
-	require_once($modifier_path);
-	$mod_name = "result_modifier_nc.php";
-}
-
-
-// Ïîäêëþ÷àåì øàáëîí áåç êåøèðîâàíèÿ
-
-$nocahe_template_path = $_SERVER["DOCUMENT_ROOT"].$arResult["__TEMPLATE_FOLDER"]."/template_nc.php";
-if (file_exists($nocahe_template_path))
-{
-	require_once($nocahe_template_path);
+  require_once($modifier_path);
+  $mod_name = "result_modifier_nc.php";
 }
 
 
-if($GLOBALS["APPLICATION"]->GetShowIncludeAreas() && $USER->isAdmin())
+// ÐŸÐ¾Ð´ÐºÐ»ÑŽÑ‡Ð°ÐµÐ¼ ÑˆÐ°Ð±Ð»Ð¾Ð½ Ð±ÐµÐ· ÐºÐµÑˆÐ¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ
+
+$nocahe_template_path = $_SERVER["DOCUMENT_ROOT"] . $arResult["__TEMPLATE_FOLDER"] . "/template_nc.php";
+if(file_exists($nocahe_template_path))
+{
+  require_once($nocahe_template_path);
+}
+
+
+if($APPLICATION->GetShowIncludeAreas() && $USER->isAdmin())
 {
 
-	// Ïîäêëþ÷åíèå èêîíîê ðåäàêòèðîâàíèÿ ôàéëà .parameters.php
+  // ÐŸÐ¾Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ Ð¸ÐºÐ¾Ð½Ð¾Ðº Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ Ñ„Ð°Ð¹Ð»Ð° .parameters.php
 
-	$filename = ".parameters.php";
-	$result_modifier_edit = "jsPopup.ShowDialog('/bitrix/admin/public_file_edit_src.php?site=".SITE_ID."&path=".urlencode($arResult["__TEMPLATE_FOLDER"])."%2F".$filename."', {'width':'770', 'height':'570', 'resize':true })";
+  $filename = ".parameters.php";
+  $result_modifier_edit = "jsPopup.ShowDialog('/bitrix/admin/public_file_edit_src.php?site=" . SITE_ID . "&path=" . urlencode($arResult["__TEMPLATE_FOLDER"]) . "%2F" . $filename . "', {'width':'770', 'height':'570', 'resize':true })";
 
-	$this->AddIncludeAreaIcon(
-	array(
-		'URL'   => "javascript:".$result_modifier_edit.";",
-		'SRC'   => $this->GetPath().'/images/edit.gif',
-		'TITLE' => "Ðåäàêòèðîâàòü ôàéë .parameters.php"
-	));
-
-
-	// Ïîäêëþ÷åíèå èêîíîê ðåäàêòèðîâàíèÿ ôàéëà result_modifier.php
-
-	$filename = "result_modifier.php";
-	$result_modifier_edit = "jsPopup.ShowDialog('/bitrix/admin/public_file_edit_src.php?site=".SITE_ID."&path=".urlencode($arResult["__TEMPLATE_FOLDER"])."%2F".$filename."', {'width':'770', 'height':'570', 'resize':true })";
-
-	$this->AddIncludeAreaIcon(
-	array(
-		'URL'   => "javascript:".$result_modifier_edit.";",
-		'SRC'   => $this->GetPath().'/images/edit.gif',
-		'TITLE' => "Ðåäàêòèðîâàòü ôàéë result_modifier.php"
-	));
+  $this->AddIncludeAreaIcon(
+    array(
+      'URL' => "javascript:" . $result_modifier_edit . ";",
+      'SRC' => $this->GetPath() . '/images/edit.gif',
+      'TITLE' => "Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ñ„Ð°Ð¹Ð» .parameters.php"
+    ));
 
 
-	// Ïîäêëþ÷åíèå èêîíîê ðåäàêòèðîâàíèÿ ôàéëà result_modifier_nc.php
+  // ÐŸÐ¾Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ Ð¸ÐºÐ¾Ð½Ð¾Ðº Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ Ñ„Ð°Ð¹Ð»Ð° result_modifier.php
 
-	$filename = $mod_name;
-	$result_modifier_edit = "jsPopup.ShowDialog('/bitrix/admin/public_file_edit_src.php?site=".SITE_ID."&path=".urlencode($arResult["__TEMPLATE_FOLDER"])."%2F".$filename."', {'width':'770', 'height':'570', 'resize':true })";
+  $filename = "result_modifier.php";
+  $result_modifier_edit = "jsPopup.ShowDialog('/bitrix/admin/public_file_edit_src.php?site=" . SITE_ID . "&path=" . urlencode($arResult["__TEMPLATE_FOLDER"]) . "%2F" . $filename . "', {'width':'770', 'height':'570', 'resize':true })";
 
-	$this->AddIncludeAreaIcon(
-	array(
-		'URL'   => "javascript:".$result_modifier_edit.";",
-		'SRC'   => $this->GetPath().'/images/edit.gif',
-		'TITLE' => "Ðåäàêòèðîâàòü ôàéë result_modifier_nc.php"
-	));
+  $this->AddIncludeAreaIcon(
+    array(
+      'URL' => "javascript:" . $result_modifier_edit . ";",
+      'SRC' => $this->GetPath() . '/images/edit.gif',
+      'TITLE' => "Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ñ„Ð°Ð¹Ð» result_modifier.php"
+    ));
 
-	// Ïîäêëþ÷åíèå èêîíîê ðåäàêòèðîâàíèÿ ôàéëà template_nc.php
 
-	$filename = "template_nc.php";
-	$template_nc_edit = "jsPopup.ShowDialog('/bitrix/admin/public_file_edit_src.php?site=".SITE_ID."&path=".urlencode($arResult["__TEMPLATE_FOLDER"])."%2F".$filename."', {'width':'770', 'height':'570', 'resize':true })";
+  // ÐŸÐ¾Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ Ð¸ÐºÐ¾Ð½Ð¾Ðº Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ Ñ„Ð°Ð¹Ð»Ð° result_modifier_nc.php
 
-	$this->AddIncludeAreaIcon(
-	array(
-		'URL'   => "javascript:".$template_nc_edit.";",
-		'SRC'   => $this->GetPath().'/images/edit.gif',
-		'TITLE' => "Ðåäàêòèðîâàòü ôàéë template_nc.php"
-	));
+  $filename = $mod_name;
+  $result_modifier_edit = "jsPopup.ShowDialog('/bitrix/admin/public_file_edit_src.php?site=" . SITE_ID . "&path=" . urlencode($arResult["__TEMPLATE_FOLDER"]) . "%2F" . $filename . "', {'width':'770', 'height':'570', 'resize':true })";
 
-}	
+  $this->AddIncludeAreaIcon(
+    array(
+      'URL' => "javascript:" . $result_modifier_edit . ";",
+      'SRC' => $this->GetPath() . '/images/edit.gif',
+      'TITLE' => "Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ñ„Ð°Ð¹Ð» result_modifier_nc.php"
+    ));
 
-// Âîçâðàùàåìîå çíà÷åíèå
-if (!empty($arResult["__RETURN_VALUE"]))
-	return $arResult["__RETURN_VALUE"];
+  // ÐŸÐ¾Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ Ð¸ÐºÐ¾Ð½Ð¾Ðº Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ Ñ„Ð°Ð¹Ð»Ð° template_nc.php
+
+  $filename = "template_nc.php";
+  $template_nc_edit = "jsPopup.ShowDialog('/bitrix/admin/public_file_edit_src.php?site=" . SITE_ID . "&path=" . urlencode($arResult["__TEMPLATE_FOLDER"]) . "%2F" . $filename . "', {'width':'770', 'height':'570', 'resize':true })";
+
+  $this->AddIncludeAreaIcon(
+    array(
+      'URL' => "javascript:" . $template_nc_edit . ";",
+      'SRC' => $this->GetPath() . '/images/edit.gif',
+      'TITLE' => "Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ñ„Ð°Ð¹Ð» template_nc.php"
+    ));
+
+}
+
+// Ð’Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÐ¼Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ
+if(!empty($arResult["__RETURN_VALUE"]))
+  return $arResult["__RETURN_VALUE"];

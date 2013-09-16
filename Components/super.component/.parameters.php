@@ -4,10 +4,10 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 $arComponentParameters = array(
 	"GROUPS" => array(
 		"OVERALL" => array(
-			"NAME" => "Îáùèå íàñòğîéêè",
+			"NAME" => "ĞĞ±Ñ‰Ğ¸Ğµ Ğ½Ğ°ÑÑ‚Ñ€Ğ¾Ğ¹ĞºĞ¸",
 		),
 		"DATA_SOURSE" => array(
-			"NAME" => "Èñòî÷íèê äàííûõ",
+			"NAME" => "Ğ˜ÑÑ‚Ğ¾Ñ‡Ğ½Ğ¸Ğº Ğ´Ğ°Ğ½Ğ½Ñ‹Ñ…",
 		),
 	),
 	"PARAMETERS" => array(
