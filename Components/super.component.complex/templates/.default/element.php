@@ -8,7 +8,7 @@ global $USER;
 global $APPLICATION;
 
 $APPLICATION->IncludeComponent(
-	"vidicom:super.component",
+	"cetera:super.component",
 	"element",
 	Array(
 		"IBLOCK_TYPE"	=>	$arParams["IBLOCK_TYPE"],
