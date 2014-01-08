@@ -25,7 +25,7 @@ class CUserTypeBool extends CUserTypeInteger
   function GetIBlockPropertyDescription()
   {
     return array(
-      "PROPERTY_TYPE" => "B",
+      "PROPERTY_TYPE" => "N",
       "USER_TYPE" => "bool",
       "DESCRIPTION" => "Логическое",
       'GetPropertyFieldHtml' => array('CUserTypeBool', 'GetPropertyFieldHtml'),
@@ -66,7 +66,7 @@ HTML;
   // редактирование свойства в списке (главный модуль)
   function GetAdminListEditHTML($arUserField, $arHtmlControl)
   {
-    return self::getViewHTML($arHtmlControl['NAME'], $arHtmlControl['VALUE'], true);
+    return self::getEditHTML($arHtmlControl['NAME'], $arHtmlControl['VALUE'], true);
   }
 
   // представление свойства в списке (главный модуль, инфоблок)
@@ -78,7 +78,7 @@ HTML;
   // редактирование свойства в форме и списке (инфоблок)
   function GetPropertyFieldHtml($arProperty, $value, $strHTMLControlName)
   {
-    return $strHTMLControlName['MODE'] == 'FORM_FILL'
+    return in_array($strHTMLControlName['MODE'], array('EDIT_FORM', 'FORM_FILL', 'iblock_element_admin'))
       ? self::getEditHTML($strHTMLControlName['VALUE'], $value['VALUE'], false)
       : self::getViewHTML($strHTMLControlName['VALUE'], $value['VALUE']);
   }
