@@ -1,0 +1,6 @@
+/* icons */
+#user_vars_menu_icon,
+#user_vars_page_icon,
+.user_vars_menu_icon {
+  background: url(icons/user_vars/icon.png) no-repeat 0 0;
+}

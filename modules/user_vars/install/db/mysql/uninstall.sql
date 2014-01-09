@@ -1,0 +1,1 @@
+DELETE FROM b_option WHERE MODULE_ID='user_vars';
