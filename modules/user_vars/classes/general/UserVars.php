@@ -8,7 +8,7 @@
  *
  * // ....
  *
- * $defaultCity = UserVars::GetVar('DEFAULT_CITY'); // получить значение пользовательской переменной, с названием DEFAULT_CITY
+ * $defaultCity = UserVars::GetVar('LANDING_PAGE_URL'); // получить значение пользовательской переменной, с названием LANDING_PAGE_URL
  *
  */
 class UserVars extends CAllOption
