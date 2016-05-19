@@ -9,7 +9,7 @@ namespace HBlock;
  * @example
  * Объект любого HL блока
  *
- * $operations = new \HBlock\SimpleHblockObject(2);
+ * $operations = new \HBlock\SimpleHblockObject(MANUFACTURERS_HB_ID);
  * $operations->getList(....)
  */
 class SimpleHblockObject extends HblockObject
