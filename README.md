@@ -1,10 +1,10 @@
-Bitrix
-======
+# Bitrix
 
 Скрипты для [CMS Bitrix](https://www.1c-bitrix.ru/)
 
 
-## Учебные курсы
+##### Учебные курсы
+
 - [Учебные онлайн-курсы](http://dev.1c-bitrix.ru/learning/index.php#tab-online-link)
 - [Администратор. Базовый](http://dev.1c-bitrix.ru/learning/course/?COURSE_ID=35)
 - [D7. Разработка собственного модуля](http://academy.1c-bitrix.ru/education/index.php?COURSE_ID=91&INDEX=Y)
@@ -13,13 +13,13 @@ Bitrix
 - [Разработка и эксплуатация высоконагруженных проектов](https://dev.1c-bitrix.ru/learning/course/?COURSE_ID=38)
 
 
-## Документация
+##### Документация
 - [Пользовательская документация](http://dev.1c-bitrix.ru/user_help/)
 - [Документация для разработчиков](http://dev.1c-bitrix.ru/api_help/)
 - [Документация для разработчиков по REST API](http://dev.1c-bitrix.ru/rest_help/)
 - [Документация по d7](http://dev.1c-bitrix.ru/api_d7/index.php)
 
-## Другое
+##### Другое
 - [База знаний](http://dev.1c-bitrix.ru/docs/knowledge_base/)
 - [Частые вопросы](http://dev.1c-bitrix.ru/support/faq/)
 - [Архив учебного видео](http://dev.1c-bitrix.ru/learning/video.php)
