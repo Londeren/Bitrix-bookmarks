@@ -11,12 +11,14 @@ use Bitrix\Main\Entity\Query;
  *
  * Можно отнаследоваться от этого класса, чтобы удобно работать с сущностями из нужного HL блока, например:
  * @example
+ * <code>
  * Class Operations extends HblockObject
  * {
  *   protected $hblockId = 2; // id HL блока
  *
  *    // methods
  * }
+ * </code>
  *
  * @method \Bitrix\Main\DB\Result getList(array $parameters = array()) @see \Bitrix\Main\Entity\DataManager::getList()
  * @method \Bitrix\Main\DB\Result getById($id) @see \Bitrix\Main\Entity\DataManager::getById()
